@@ -1,8 +1,9 @@
 import os
 import time
+import sys
 
-class txt:                  # To add text markdown. Example:  print( txt.red + txt.bold + "text" + txt.end )
-    bold = '\033[1m'        # This would produce "text" written in red and weighted in bold.
+class txt:             # To add text markdown. Example:  print( txt.red + txt.bold + "text" + txt.end )
+    bold = '\033[1m'    # This would produce "text" written in red and weighted in bold.
     italics = '\x1B[3m'
     end = '\033[0m'
     underline = '\033[4m'
@@ -18,24 +19,66 @@ def sleep(milleseconds):
     time.sleep(milleseconds / 1000)
 
 def clear():
-    os.system('cls' if os.name == 'nt' else "printf '\033c'") 
+    os.system('cls' if os.name == 'nt' else "printf '\033c'")
 
 def egg():                                 # For sake of adding easter eggs into programs
-    print(txt.yellow+txt.bold+''' 
+    print(txt.yellow+txt.bold+'''
 Congratulations! You've found an...
-  ______          _            ______            
- |  ____|        | |          |  ____|           
- | |__   __ _ ___| |_ ___ _ __| |__   __ _  __ _ 
- |  __| / _` / __| __/ _ \ '__|  __| / _` |/ _` |
- | |___| (_| \__ \ ||  __/ |  | |___| (_| | (_| |
- |______\__,_|___/\__\___|_|  |______\__, |\__, |
-                                      __/ | __/ |
-                                     |___/ |___/ '''+txt.end)
 
-def next():
-    print("\nPress",  "Enter", "to continue...")
-    input()
+███████╗ █████╗  ██████╗████████╗███████╗██████╗ 
+██╔════╝██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔══██╗
+█████╗  ███████║╚█████╗    ██║   █████╗  ██████╔╝
+██╔══╝  ██╔══██║ ╚═══██╗   ██║   ██╔══╝  ██╔══██╗
+███████╗██║  ██║██████╔╝   ██║   ███████╗██║  ██║
+╚══════╝╚═╝  ╚═╝╚═════╝    ╚═╝   ╚══════╝╚═╝  ╚═╝
+    ███████╗ ██████╗  ██████╗ 
+    ██╔════╝██╔════╝ ██╔════╝ 
+    █████╗  ██║  ██╗ ██║  ██╗ 
+    ██╔══╝  ██║  ╚██╗██║  ╚██╗
+    ███████╗╚██████╔╝╚██████╔╝
+    ╚══════╝ ╚═════╝  ╚═════╝ '''+txt.end)
 
-def exit():
-    print("\nPress",  "Enter", "to exit...")
+def getKey(search,dictionary):
+    for key, value in dictionary.items():
+        if value == search:
+            return key
+    return "(!) ERROR (!) <KEY NOT FOUND>"
+
+def capital(text):
+    firstChar = True
+    output = ""
+    for char in text:
+        if firstChar is True:
+            output = output + char.upper()
+        else:
+            output = output + char
+        firstChar = False
+    return output
+   
+def slowPrint(text,delay=50):
+    '''Prints a string character by character with a 
+    customisable ms delay between each character (50ms default)'''
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        sleep(delay)
+
+def enter(option=1,isSlow=False):
+    '''Prints an ' Press Enter to proceed/exit...' prompt.
+
+    (optional) You can select an option as an argument: 1 or 2
+    1 = 'Press Enter to proceed...' (default)
+    2 = 'Press Enter to exit...'
+    '''
+    match option:
+        case 1:
+            if isSlow is True:
+                slowPrint("\nPress ENTER to proceed...",30)
+            else:
+                print("\nPress ENTER to proceed...")
+        case 2:
+            if isSlow is True:
+                slowPrint("\nPress ENTER to exit...",30)
+            else:
+                print("\nPress ENTER to exit...")
     input()
