@@ -68,9 +68,18 @@ def genStats(enemyType):
                 "Claws": 1.1,
                 "Bite": 1.2
             }
+        case "vampire":
+            health = dom.randint(15,20)
+            dmg = dom.randint(4,6)
+            armour = 2
+            exp = 5
+            enemyMoves = {
+                "Bite": 1.2,
+                "Bat Attack": 1
+            }
     return health, dmg, armour, exp
 
-def showBattle(player,pMoves,enemy,eMoves):
+def showBattle(pStats,pMoves,eStats,eMoves):
     '''Show stats of the enemy and player in a battle'''
     pb.slowPrint('''
 ██████╗  █████╗ ████████╗████████╗██╗     ███████╗
@@ -79,30 +88,18 @@ def showBattle(player,pMoves,enemy,eMoves):
 ██╔══██╗██╔══██║   ██║      ██║   ██║     ██╔══╝  
 ██████╦╝██║  ██║   ██║      ██║   ███████╗███████╗
 ╚═════╝ ╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚══════╝╚══════╝''',4)
-    print("\n")
     pb.sleep(250)
-    print(txt.bold+"=== Enemy ( {} ) ===".format(enemy["type"]+txt.end))
-    for i in enemy:
-        print(pb.capital(i)+":", enemy[i],1)
-    '''print(txt.bold+"=== Enemy ( {} ) ===".format(enemy["type"]+txt.end), # Print Enemy Stats
-          txt.bold+txt.italics+txt.faint+"\nHealth:"+txt.end, round(enemy["health"],1),
-          txt.bold+txt.italics+txt.faint+"\nDamage:"+txt.end, round(enemy["dmg"],1),
-          txt.bold+txt.italics+txt.faint+"\nArmour:"+txt.end, enemy["armour"],
-          txt.bold+txt.italics+txt.faint+"\nExp:"+txt.end, round(enemy["exp"],1),
-          "\n\n"+
-          txt.bold+"===== You ====="+txt.end, # Print Player Stats
-          txt.bold+txt.italics+txt.faint+"\nHealth:"+txt.end, round(player["health"],1),
-          txt.bold+txt.italics+txt.faint+"\nDamage:"+txt.end, round(player["dmg"],1),
-          txt.bold+txt.italics+txt.faint+"\nArmour:"+txt.end, round(player["armour"],1),"\n"
-         )'''
-    pMultis = pMoves["dmgMultis"]
-    pMoves = pMoves["moves"]
-    i = len(pMoves)-1
-    total = i
-    print(txt.bold+"=== Move List ==="+txt.end)
-    while i != -1:
-        print(str(len(pMoves)-i)+".", txt.bold+txt.italics, pMoves[total-i], txt.faint+"( Damage Multiplier:"+txt.end, txt.bold+txt.italics, pMultis[total-i], txt.faint+")"+txt.end)
-        i -= 1
+    print(txt.bold+"\n\n=== Enemy ( {} ) ===".format(eStats["type"]+txt.end))
+    printEntityInfo(eStats,eMoves)
+    print(txt.bold+"\n=== You ==="+txt.end)
+    printEntityInfo(pStats,pMoves)
+
+def printEntityInfo(stats,moves=False):
+    for i in stats:
+        print(pb.capital(i)+":", stats[i])
+    if moves is not False:
+        for count, i in enumerate(moves):
+            print(f"{count+1}.", i, txt.fBotalics+f"( Damage Multiplier: {txt.end+str(moves[i])+txt.fBotalics})", txt.end)
 
 def intro():
     pb.slowPrint("Welcome to...")
@@ -116,15 +113,15 @@ def intro():
 ╚═╝  ╚═╝╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝╚═╝  ╚══╝╚═╝╚═╝  ╚═╝\n''',4)
 
 pb.clear()
-enemyTypes = ("Boar","Dragon","Orc","Minotaur","Wolf")
+enemyTypes = ("Boar","Dragon","Orc","Minotaur","Wolf","Vampire")
 playerStats = {
     "health": 30,
     "dmg": 8,
     "armour": 2
 }
 playerMoves = {
-    "moves": ["Slash","Stab"],
-    "dmgMultis": [1.2,1.1]
+    "slash": 1.2,
+    "stab": 1.1
 }
 enemyMoves = {}
 enemyStats = genEnemy(5,enemyTypes)

@@ -2,10 +2,13 @@ import os
 import time
 import sys
 
-class txt:             # To add text markdown. Example:  print( txt.red + txt.bold + "text" + txt.end )
-    bold = '\033[1m'    # This would produce "text" written in red and weighted in bold.
+class txt:
+    def __init__(self,text):
+        self.text = text
+
+    end = '\033[0m'         # To add text markdown. Example:  print( txt.red + txt.bold + "text" + txt.end )
+    bold = '\033[1m'          # This would produce "text" written in red and weighted in bold.
     italics = '\x1B[3m'
-    end = '\033[0m'
     underline = '\033[4m'
     purple = '\033[95m'
     cyan = '\033[96m'
@@ -13,7 +16,9 @@ class txt:             # To add text markdown. Example:  print( txt.red + txt.bo
     green = '\033[92m'
     yellow = '\033[93m'
     red = '\033[91m'
-    faint = "\033[2m"
+    faint = '\033[2m'
+    botalics = '\033[1m \x1B[3m' # Bold + Italics
+    fBotalics = '\033[1m \x1B[3m \033[2m' # Faint + Bold + Italics
 
 def sleep(milleseconds):
     time.sleep(milleseconds / 1000)
