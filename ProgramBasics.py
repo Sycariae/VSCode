@@ -1,11 +1,9 @@
 import os
 import time
-import sys
 
 class txt:
-    def __init__(self,text):
-        self.text = text
-
+    #def __init__(self,text):
+    #    self.text = text
     end = '\033[0m'         # To add text markdown. Example:  print( txt.red + txt.bold + "text" + txt.end )
     bold = '\033[1m'          # This would produce "text" written in red and weighted in bold.
     italics = '\x1B[3m'
@@ -43,11 +41,12 @@ Congratulations! You've found an...
     ███████╗╚██████╔╝╚██████╔╝
     ╚══════╝ ╚═════╝  ╚═════╝ '''+txt.end)
 
-def getKey(search,dictionary):
-    for key, value in dictionary.items():
-        if value == search:
-            return key
-    return "(!) ERROR (!) <KEY NOT FOUND>"
+def checkForKey(search,dictionary):
+    keyFound = False
+    for i in dictionary:
+        if i == search:
+            keyFound = True
+    return keyFound
 
 def capital(text):
     firstChar = True
@@ -60,30 +59,37 @@ def capital(text):
         firstChar = False
     return output
    
-def slowPrint(text,delay=50):
-    '''Prints a string character by character with a 
-    customisable ms delay between each character (50ms default)'''
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        sleep(delay)
+def slowPrint(delay, *args, **kwargs):
+    '''Prints a list of arguments by character with a 
+    customisable ms delay between each character
 
-def enter(option=1,isSlow=False):
+    slowPrint(delay,arg1,arg2,arg3...)'''
+    for arg in args:
+        arg = str(arg)
+        for char in arg:
+            print(char, end='', flush=True)
+            sleep(delay)
+    for key, value in kwargs.items():
+        if key == "end" and value != "":
+            print()
+        else:
+            print("End Key Found")
+    '''if checkForKey("end",kwargs) is False:
+        if kwargs["end"] == "":
+            print()'''
+
+def enter(option=1):
     '''Prints an ' Press Enter to proceed/exit...' prompt.
 
-    (optional) You can select an option as an argument: 1 or 2
+    enter() OR enter(1) OR enter(2)
+
+    (optional) You can select an option: 1 / 2
     1 = 'Press Enter to proceed...' (default)
     2 = 'Press Enter to exit...'
     '''
     match option:
         case 1:
-            if isSlow is True:
-                slowPrint("\nPress ENTER to proceed...",30)
-            else:
-                print("\nPress ENTER to proceed...")
+            print("\nPress ENTER to proceed...")
         case 2:
-            if isSlow is True:
-                slowPrint("\nPress ENTER to exit...",30)
-            else:
-                print("\nPress ENTER to exit...")
+            print("\nPress ENTER to exit...")
     input()

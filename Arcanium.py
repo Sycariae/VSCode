@@ -81,36 +81,39 @@ def genStats(enemyType):
 
 def showBattle(pStats,pMoves,eStats,eMoves):
     '''Show stats of the enemy and player in a battle'''
-    pb.slowPrint('''
+    pb.slowPrint(3,'''
 ██████╗  █████╗ ████████╗████████╗██╗     ███████╗
 ██╔══██╗██╔══██╗╚══██╔══╝╚══██╔══╝██║     ██╔════╝
 ██████╦╝███████║   ██║      ██║   ██║     █████╗  
 ██╔══██╗██╔══██║   ██║      ██║   ██║     ██╔══╝  
 ██████╦╝██║  ██║   ██║      ██║   ███████╗███████╗
-╚═════╝ ╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚══════╝╚══════╝''',4)
+╚═════╝ ╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚══════╝╚══════╝''')
     pb.sleep(250)
-    print(txt.bold+"\n\n=== Enemy ( {} ) ===".format(eStats["type"]+txt.end))
+    pb.slowPrint(15,txt.bold+"\n\n=== Enemy ( {} ) ===".format(eStats["type"]+txt.end))
     printEntityInfo(eStats,eMoves)
-    print(txt.bold+"\n=== You ==="+txt.end)
+    pb.slowPrint(15,"\n==================================")
+    pb.slowPrint(15,txt.bold+"\n=== You ==="+txt.end)
     printEntityInfo(pStats,pMoves)
 
 def printEntityInfo(stats,moves=False):
     for i in stats:
-        print(pb.capital(i)+":", stats[i])
+        pb.slowPrint(15,pb.capital(i)+":", stats[i])
     if moves is not False:
+        pb.slowPrint(15,txt.italics+"\n=== Moves ==="+txt.end)
         for count, i in enumerate(moves):
-            print(f"{count+1}.", i, txt.fBotalics+f"( Damage Multiplier: {txt.end+str(moves[i])+txt.fBotalics})", txt.end)
+            pb.slowPrint(10,f"{count+1}.", i, end="")
+            pb.slowPrint(5,txt.fBotalics+f"( Damage Multiplier: {txt.end+str(moves[i])+txt.fBotalics})", txt.end)
 
 def intro():
-    pb.slowPrint("Welcome to...")
+    pb.slowPrint(40,"Welcome to...")
     print()
-    pb.slowPrint('''
+    pb.slowPrint(3,'''
  █████╗ ██████╗  █████╗  █████╗ ███╗  ██╗██╗ █████╗ 
 ██╔══██╗██╔══██╗██╔══██╗██╔══██╗████╗ ██║██║██╔══██╗
 ███████║██████╔╝██║  ╚═╝███████║██╔██╗██║██║███████║
 ██╔══██║██╔══██╗██║  ██╗██╔══██║██║╚████║██║██╔══██║
 ██║  ██║██║  ██║╚█████╔╝██║  ██║██║ ╚███║██║██║  ██║
-╚═╝  ╚═╝╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝╚═╝  ╚══╝╚═╝╚═╝  ╚═╝\n''',4)
+╚═╝  ╚═╝╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝╚═╝  ╚══╝╚═╝╚═╝  ╚═╝\n''')
 
 pb.clear()
 enemyTypes = ("Boar","Dragon","Orc","Minotaur","Wolf","Vampire")
@@ -120,12 +123,14 @@ playerStats = {
     "armour": 2
 }
 playerMoves = {
-    "slash": 1.2,
-    "stab": 1.1
+    "Slash": 1.2,
+    "Stab": 1.1
 }
 enemyMoves = {}
 enemyStats = genEnemy(5,enemyTypes)
-intro()
-pb.enter(1,True)
+skip = input("Skip the intro? (Y/n): ")
+if skip.lower() == "n":
+    intro()
+    pb.enter(1)
 pb.clear()
 showBattle(playerStats,playerMoves,enemyStats,enemyMoves)
