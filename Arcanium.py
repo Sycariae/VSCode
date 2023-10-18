@@ -95,10 +95,10 @@ def showBattle(pStats,pMoves,eStats,eMoves):
     pb.slowPrint(15,txt.bold+"\n=== You ==="+txt.end)
     printEntityInfo(pStats,pMoves)
 
-def printEntityInfo(stats,moves=False):
+def printEntityInfo(stats,moves=None):
     for i in stats:
         pb.slowPrint(15,pb.capital(i)+":", stats[i])
-    if moves is not False:
+    if moves is not None:
         pb.slowPrint(15,txt.italics+"\n=== Moves ==="+txt.end)
         for count, i in enumerate(moves):
             pb.slowPrint(10,f"{count+1}.", i, end="")
@@ -130,7 +130,8 @@ enemyMoves = {}
 enemyStats = genEnemy(5,enemyTypes)
 skip = input("Skip the intro? (Y/n): ")
 if skip.lower() == "n":
+    pb.clear()
     intro()
-    pb.enter(1)
+    pb.enter()
 pb.clear()
 showBattle(playerStats,playerMoves,enemyStats,enemyMoves)

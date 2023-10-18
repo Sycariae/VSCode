@@ -42,10 +42,10 @@ Congratulations! You've found an...
     ╚══════╝ ╚═════╝  ╚═════╝ '''+txt.end)
 
 def checkForKey(search,dictionary):
-    keyFound = False
-    for i in dictionary:
-        if i == search:
-            keyFound = True
+    if search in dictionary:
+        keyFound = True
+    else:
+        keyFound = False
     return keyFound
 
 def capital(text):
@@ -69,14 +69,8 @@ def slowPrint(delay, *args, **kwargs):
         for char in arg:
             print(char, end='', flush=True)
             sleep(delay)
-    for key, value in kwargs.items():
-        if key == "end" and value != "":
-            print()
-        else:
-            print("End Key Found")
-    '''if checkForKey("end",kwargs) is False:
-        if kwargs["end"] == "":
-            print()'''
+    if checkForKey("end",kwargs) is False:
+        print()
 
 def enter(option=1):
     '''Prints an ' Press Enter to proceed/exit...' prompt.
