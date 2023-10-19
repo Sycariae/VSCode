@@ -22,7 +22,8 @@ def sleep(milleseconds):
     time.sleep(milleseconds / 1000)
 
 def clear():
-    os.system('cls' if os.name == 'nt' else "printf '\033c'")
+    try: os.system('cls' if os.name == 'nt' else "printf '\033c'")
+    except: pass
 
 def egg():                                 # For sake of adding easter eggs into programs
     print(txt.yellow+txt.bold+'''
@@ -42,6 +43,10 @@ Congratulations! You've found an...
     ╚══════╝ ╚═════╝  ╚═════╝ '''+txt.end)
 
 def checkForKey(search,dictionary):
+    '''Searches a dictionary to check if it contains a value with a specific key
+
+    checkForKey({search},{dictionary})
+    '''
     if search in dictionary:
         keyFound = True
     else:
@@ -60,10 +65,11 @@ def capital(text):
     return output
    
 def slowPrint(delay, *args, **kwargs):
-    '''Prints a list of arguments by character with a 
+    '''Prints a list of arguments, character by character with a 
     customisable ms delay between each character
 
-    slowPrint(delay,arg1,arg2,arg3...)'''
+    slowPrint(delay,arg1,arg2,arg3...)
+    '''
     for arg in args:
         arg = str(arg)
         for char in arg:
@@ -73,17 +79,15 @@ def slowPrint(delay, *args, **kwargs):
         print()
 
 def enter(option=1):
-    '''Prints an ' Press Enter to proceed/exit...' prompt.
+    '''Prints an ' Press ENTER to proceed/exit...' prompt.
 
-    enter() OR enter(1) OR enter(2)
-
-    (optional) You can select an option: 1 / 2
-    1 = 'Press Enter to proceed...' (default)
-    2 = 'Press Enter to exit...'
+    CALL: enter() OR enter(1) = OUTPUT: Press ENTER to proceed...
+    CALL: enter(2) = OUTPUT: Press ENTER to exit...
     '''
+    enterText = txt.bold+"ENTER"+txt.end
     match option:
         case 1:
-            print("\nPress ENTER to proceed...")
+            print(f"\nPress {enterText} to proceed...")
         case 2:
-            print("\nPress ENTER to exit...")
+            print(f"\nPress {enterText} to exit...")
     input()
