@@ -4,11 +4,14 @@ import DisplayScreens as display
 import RandomGeneration as generate
 
 def playerTurn():
-    pb.slowPrint("\nType the number of the move to attack with: ", end="")
-    choice = input()
-    while isinstance(choice,int) and choice in range(playerMoves):
-        pb.slowPrint("\nType the number of the move to attack with: ", end="")
-        choice = input()
+    choice = None
+    first = True # Used to check for the first iteration
+    while choice not in range(1,len(playerMoves)+1):
+        if first is False: print("Invalid Choice, Pick Again")
+        pb.slowPrint(30,"\nType the number of the move to attack with: ", end="")
+        choice = int(input())
+        first = False
+    print(f"Valid Choice: {choice}")
 
 def skip():
     '''Ask whether to skip the intro sequence'''

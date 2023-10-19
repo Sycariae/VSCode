@@ -57,20 +57,28 @@ def capital(text):
     firstChar = True
     output = ""
     for char in text:
-        if firstChar is True:
-            output = output + char.upper()
-        else:
-            output = output + char
+        if firstChar is True: output = output + char.upper()
+        else: output = output + char
         firstChar = False
     return output
    
-def slowPrint(delay, *args, **kwargs):
+def slowPrint(*args, **kwargs):
     '''Prints a list of arguments, character by character with a 
     customisable ms delay between each character
 
-    slowPrint(delay,arg1,arg2,arg3...)
+    {delay} is optional and defaults to 40 if the first argument is not numeric.
+
+    {kwarg} is optional and can be used to take the following input: end=""
+    which will make the next print statement type from where it left off.
+
+    slowPrint(delay,arg1,arg2,arg3...kwarg)
     '''
-    for arg in args:
+    for i, arg in enumerate(args):
+        if i == 0:
+            if isinstance(arg,int): 
+                delay = arg
+                continue
+            else: delay = 40
         arg = str(arg)
         for char in arg:
             print(char, end='', flush=True)
